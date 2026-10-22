@@ -25,9 +25,9 @@ export const Route = createFileRoute("/_layout/settings")({
 
 function UserSettings() {
   const { user: currentUser } = useAuth()
-  const finalTabs = currentUser?.is_superuser
-    ? tabsConfig.slice(0, 3)
-    : tabsConfig
+  // Admins can't delete their own account (also enforced by the API)
+  const finalTabs =
+    currentUser?.role === "admin" ? tabsConfig.slice(0, 3) : tabsConfig
 
   if (!currentUser) {
     return null
